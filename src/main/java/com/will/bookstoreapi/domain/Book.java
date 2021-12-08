@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.ForeignKey;
 
 @Entity
 public class Book implements Serializable {
@@ -21,12 +23,16 @@ public class Book implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	private String title;
+
 	private String authorName;
+
 	private String text;
 
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "category_id")
+	@JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "FK_categoria"))
 	private Category category;
 
 	public Book() {
