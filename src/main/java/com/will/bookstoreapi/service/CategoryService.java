@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.will.bookstoreapi.domain.Category;
 import com.will.bookstoreapi.repository.CategoryRepository;
+import com.will.bookstoreapi.resources.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -17,7 +18,8 @@ public class CategoryService {
 	public Category findById(Integer id) {
 		Optional<Category> objOptional = categoryRepository.findById(id);
 
-		return objOptional.orElseThrow();
+		return objOptional.orElseThrow(
+				() -> new ObjectNotFoundException("Object not found " + id + ", type: " + Category.class.getName()));
 	}
 
 }
