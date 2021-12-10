@@ -2,6 +2,10 @@ package com.will.bookstoreapi.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.will.bookstoreapi.domain.Book;
 
 public class BookDTO implements Serializable {
@@ -12,6 +16,9 @@ public class BookDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+
+	@NotEmpty(message = "The field Title is mandatory")
+	@Length(min = 3, max = 50, message = "This filed must contain between 3 to 50 characters")
 	private String title;
 
 	public BookDTO() {

@@ -57,4 +57,8 @@ public class BookService {
 		book.setCategory(cat);
 		return bookRepository.save(book);
 	}
+
+	public List<Book> findall() {
+		return bookRepository.findAll();
+	}
 }
