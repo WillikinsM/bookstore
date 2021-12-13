@@ -10,7 +10,7 @@
 
 <img src="bookstore-api.PNG" alt="Bookstore API">
 
-> API criada com o intuito aprimorar minhas habilidades no desenvolvimento back-end com Java + SpringBoot.
+> API criada com o intuito de aprimorar minhas habilidades no desenvolvimento back-end com Java + SpringBoot.
 ### Ajustes e melhorias
 
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
