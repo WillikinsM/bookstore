@@ -8,7 +8,7 @@
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/WillikinsM/bookstore?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/WillikinsM/bookstore?style=for-the-badge)
 
-<img src="hello-react.png" alt="Bookstore API">
+<img src="bookstore-api.PNG" alt="Bookstore API">
 
 > API criada com o intuito aprimorar minhas habilidades no desenvolvimento back-end com Java + SpringBoot.
 ### Ajustes e melhorias
