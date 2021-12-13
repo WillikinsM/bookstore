@@ -37,7 +37,7 @@ public class Book implements Serializable {
 	private String authorName;
 
 	@NotEmpty(message = "The field Name is mandatory")
-	@Length(min = 10, max = 3000, message = "This filed must contain between 10 to 300 characters")
+	@Length(min = 4, max = 3000, message = "This filed must contain between 10 to 300 characters")
 	private String text;
 
 	@JsonIgnore
