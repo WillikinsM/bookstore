@@ -64,7 +64,7 @@ public class BookResources {
 	}
 
 	@ApiOperation(value = "Create a new Book")
-	@PostMapping(value = "/{id}")
+	@PostMapping
 	public ResponseEntity<Book> create(@Valid @RequestBody Book book,
 			@RequestParam(value = "category", defaultValue = "0") Integer id_cat) {
 
