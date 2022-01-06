@@ -21,6 +21,8 @@ public class BookDTO implements Serializable {
 	@Length(min = 3, max = 50, message = "This filed must contain between 3 to 50 characters")
 	private String title;
 
+	private String imgLink;
+
 	public BookDTO() {
 		super();
 	}
@@ -29,6 +31,7 @@ public class BookDTO implements Serializable {
 		super();
 		this.id = book.getId();
 		this.title = book.getTitle();
+		this.imgLink = book.getImgLink();
 	}
 
 	public Integer getId() {
@@ -45,6 +48,14 @@ public class BookDTO implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getImgLink() {
+		return imgLink;
+	}
+
+	public void setImgLink(String imgLink) {
+		this.imgLink = imgLink;
 	}
 
 	public static long getSerialversionuid() {

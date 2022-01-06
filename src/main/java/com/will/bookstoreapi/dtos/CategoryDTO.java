@@ -25,6 +25,8 @@ public class CategoryDTO implements Serializable {
 	@Length(min = 8, max = 1000, message = "This filed must contain between 8 to 250 characters")
 	private String description;
 
+	private String imgLink;
+
 	public CategoryDTO() {
 		super();
 	}
@@ -34,6 +36,7 @@ public class CategoryDTO implements Serializable {
 		this.id = cat.getId();
 		this.name = cat.getName();
 		this.description = cat.getDescription();
+		this.imgLink = cat.getImgLink();
 	}
 
 	public Integer getId() {
@@ -58,6 +61,14 @@ public class CategoryDTO implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getImgLink() {
+		return imgLink;
+	}
+
+	public void setImgLink(String imgLink) {
+		this.imgLink = imgLink;
 	}
 
 	public static long getSerialversionuid() {

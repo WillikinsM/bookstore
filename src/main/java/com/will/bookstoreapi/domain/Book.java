@@ -39,6 +39,9 @@ public class Book implements Serializable {
 	@NotEmpty(message = "The field Name is mandatory")
 	@Length(min = 4, max = 3000, message = "This filed must contain between 10 to 300 characters")
 	private String text;
+	
+	
+	private String imgLink;
 
 	@JsonIgnore
 	@ManyToOne
@@ -49,12 +52,13 @@ public class Book implements Serializable {
 		super();
 	}
 
-	public Book(Integer id, String title, String authorName, String text, Category category) {
+	public Book(Integer id, String title, String authorName, String text, String imgLink, Category category) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.authorName = authorName;
 		this.text = text;
+		this.imgLink = imgLink;
 		this.category = category;
 	}
 
@@ -88,6 +92,14 @@ public class Book implements Serializable {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public String getImgLink() {
+		return imgLink;
+	}
+
+	public void setImgLink(String imgLink) {
+		this.imgLink = imgLink;
 	}
 
 	public Category getCategory() {

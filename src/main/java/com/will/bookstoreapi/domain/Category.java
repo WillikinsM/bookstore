@@ -36,6 +36,8 @@ public class Category implements Serializable {
 	@Length(min = 8, max = 1000, message = "This filed must contain between 8 to 250 characters")
 	private String description;
 
+	private String imgLink;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	private List<Book> book = new ArrayList<>();
@@ -44,11 +46,12 @@ public class Category implements Serializable {
 		super();
 	}
 
-	public Category(Integer id, String name, String description) {
+	public Category(Integer id, String name, String description, String imgLink) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.imgLink = imgLink;
 	}
 
 	public Integer getId() {
@@ -73,6 +76,14 @@ public class Category implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getImgLink() {
+		return imgLink;
+	}
+
+	public void setImgLink(String imgLink) {
+		this.imgLink = imgLink;
 	}
 
 	public List<Book> getBook() {
