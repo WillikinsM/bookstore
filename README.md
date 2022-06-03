@@ -23,7 +23,12 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Implementar classes de service
 - [x] Implementar tratamento personalizado de exceções
 - [x] Documentar a api com Swagger 2
-- [x] Deploy da API no Heroku
+- [ ] Conteinerizar api com Docker
+- [ ] Realizar deploy no azure 
+- [ ] Criar pipeline para commits
+- [-] Implementar autenticação para usuarios
+- [ ] Implementar shop cart
+- [ ] Implementar banco de dados SQL
 
 
 ## 📝 Diversos
