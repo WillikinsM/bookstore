@@ -1,17 +1,19 @@
 package com.will.bookstoreapi.auth.appUser;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,8 +36,9 @@ public class AppUser implements UserDetails {
     private String lastName;
     private String email;
     private String password;
-    @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
+    @JsonIgnore
+    @ElementCollection @Fetch(FetchMode.JOIN)
+    private Set<GrantedAuthority> grantedAuthorities;
     private Boolean locked = false;
     private Boolean enabled = false;
 
@@ -45,21 +48,20 @@ public class AppUser implements UserDetails {
                    String lastName,
                    String email,
                    String password,
-                   AppUserRole appUserRole) {
+                   Set<GrantedAuthority> grantedAuthorities) {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.appUserRole = appUserRole;
+        this.grantedAuthorities = grantedAuthorities;
     }
 
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
-        return Collections.singletonList(authority);
+        return grantedAuthorities;
     }
 
     @Override

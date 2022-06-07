@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/category")
+@RequestMapping(value = "")
 @Api(value = "Category")
 public class CategoryResources {
 
@@ -29,6 +30,7 @@ public class CategoryResources {
     }
 
     @ApiOperation(value = "Find Category by given ID")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Category> findById(@PathVariable Long id) {
         Category obj = categoryService.findById(id);
@@ -36,7 +38,8 @@ public class CategoryResources {
     }
 
     @ApiOperation(value = "Find all categories")
-    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @GetMapping(value ="/")
     public ResponseEntity<List<CategoryDTO>> findAll() {
         List<Category> catList = categoryService.findAll();
         List<CategoryDTO> dtoList = catList.stream().map(CategoryDTO::new).collect(Collectors.toList());
@@ -44,7 +47,8 @@ public class CategoryResources {
     }
 
     @ApiOperation(value = "Create a new category")
-    @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(value ="/admin/create")
     public ResponseEntity<Category> create(@Valid @RequestBody Category cat) {
         cat = categoryService.create(cat);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -53,7 +57,8 @@ public class CategoryResources {
     }
 
     @ApiOperation(value = "Update a existing category")
-    @PutMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping(value = "/admin/update/{id}")
     public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @Valid @RequestBody CategoryDTO catDto) {
         Category newCat = categoryService.update(id, catDto);
         return ResponseEntity.ok().body(new CategoryDTO(newCat));
@@ -61,7 +66,8 @@ public class CategoryResources {
     }
 
     @ApiOperation(value = "Delete a existing category")
-    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping(value = "/admin/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         categoryService.delete(id);
 

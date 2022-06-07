@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BookstoreApiApplication.LOCAL" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="dev" />
+    <envs>
+      <env name="SMTP_USERNAME" value="rebecachaves1@outlook.com" />
+      <env name="SMTP_PASSWORD" value="VaisefudE3" />
+    </envs>
+    <module name="bookstore-api" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.will.bookstoreapi.BookstoreApiApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

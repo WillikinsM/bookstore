@@ -2,7 +2,7 @@ package com.will.bookstoreapi.auth.registration;
 
 
 import com.will.bookstoreapi.auth.appUser.AppUser;
-import com.will.bookstoreapi.auth.appUser.AppUserRole;
+import com.will.bookstoreapi.auth.appUser.AppUserRepository;
 import com.will.bookstoreapi.auth.appUser.AppUserService;
 import com.will.bookstoreapi.auth.email.EmailSender;
 import com.will.bookstoreapi.auth.registration.token.ConfirmationToken;
@@ -12,12 +12,16 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Optional;
+
+import static com.will.bookstoreapi.auth.appUser.AppUserRole.*;
 
 @Service
 @AllArgsConstructor
 public class RegistrationService {
 
     private final AppUserService appUserService;
+    private final AppUserRepository appUserRepository;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
@@ -34,15 +38,18 @@ public class RegistrationService {
                         request.getLastName(),
                         request.getEmail(),
                         request.getPassword(),
-                        AppUserRole.USER
+                        USER.getGrantedAuthorities()
                 )
         );
 
         String link = "http://localhost:8080/api/v1/registration/confirm?token="+ token;
-
         emailSender.send(request.getEmail(),buildEmail(request.getFirstName(), link));
-
         return token;
+    }
+
+    public AppUser getById(Long id){
+        Optional<AppUser> user = appUserRepository.findById(id);
+        return user.orElseThrow(RuntimeException::new);
     }
 
     @Transactional
@@ -50,16 +57,16 @@ public class RegistrationService {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
+                        new IllegalStateException("Token not found"));
 
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
+            throw new IllegalStateException("Email already confirmed");
         }
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("token expired");
+            throw new IllegalStateException("Token expired");
         }
 
         confirmationTokenService.setConfirmedAt(token);
