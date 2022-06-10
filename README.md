@@ -26,7 +26,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [ ] Conteinerizar api com Docker
 - [ ] Realizar deploy no azure 
 - [ ] Criar pipeline para commits
-- [-] Implementar autenticação para usuarios
+- [x] Implementar autenticação para usuarios
 - [ ] Implementar shop cart
 - [ ] Implementar banco de dados SQL
 
