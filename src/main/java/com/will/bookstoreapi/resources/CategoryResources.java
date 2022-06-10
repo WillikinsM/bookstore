@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "")
+@RequestMapping(value = "/category")
 @Api(value = "Category")
 public class CategoryResources {
 

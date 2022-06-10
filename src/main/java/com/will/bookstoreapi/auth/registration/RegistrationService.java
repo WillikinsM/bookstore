@@ -38,7 +38,7 @@ public class RegistrationService {
                         request.getLastName(),
                         request.getEmail(),
                         request.getPassword(),
-                        USER.getGrantedAuthorities()
+                        ADMIN.getGrantedAuthorities()
                 )
         );
 
