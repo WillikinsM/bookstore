@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
+//import com.will.bookstoreapi.TODO: import Html to confirmar email
 import static com.will.bookstoreapi.auth.appUser.AppUserRole.*;
 
 @Service
@@ -42,7 +42,7 @@ public class RegistrationService {
                 )
         );
 
-        String link = "http://localhost:8080/api/v1/registration/confirm?token="+ token;
+        String link = "http://localhost:8080/api/v1/confirmation/?token="+ token;
         emailSender.send(request.getEmail(),buildEmail(request.getFirstName(), link));
         return token;
     }
@@ -53,7 +53,7 @@ public class RegistrationService {
     }
 
     @Transactional
-    public String confirmToken(String token) {
+    public void confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
@@ -72,7 +72,7 @@ public class RegistrationService {
         confirmationTokenService.setConfirmedAt(token);
         appUserService.enableAppUser(
                 confirmationToken.getAppUser().getEmail());
-        return "confirmed";
+
     }
 
     private String buildEmail(String name, String link) {

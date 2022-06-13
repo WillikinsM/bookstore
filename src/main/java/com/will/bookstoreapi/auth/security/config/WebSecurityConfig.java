@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/configuration/ui").permitAll()
                 .antMatchers("/api/v*/registration/**").permitAll()
+                .antMatchers("/api/v*/confirmation/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/swagger-ui**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
