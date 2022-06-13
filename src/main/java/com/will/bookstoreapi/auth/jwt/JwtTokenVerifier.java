@@ -5,7 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+import lombok.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,7 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,8 +35,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,@NonNull HttpServletResponse response,
+                                   @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String authorizationHeader = request.getHeader(jwtConfig.getAuthorizationHeader());
 
@@ -60,7 +59,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
             String username = body.getSubject();
 
-            var authorities = (List<Map<String, String>>) body.get("authorities");
+            @SuppressWarnings (value="unchecked")
+            var authorities = (List<Map<String, String>>)body.get("authorities");
 
             Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
                     .map(m -> new SimpleGrantedAuthority(m.get("authority"))).
