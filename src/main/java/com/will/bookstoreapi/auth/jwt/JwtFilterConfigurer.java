@@ -21,7 +21,8 @@ public class JwtFilterConfigurer extends AbstractHttpConfigurer<JwtFilterConfigu
     @Override
     public void configure(HttpSecurity http) throws Exception {
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-        http.addFilter(new JwtUsernameAndPasswordAuthFilter(authenticationManager,jwtConfig,secretKey))
+        http.
+        addFilter(new JwtUsernameAndPasswordAuthFilter(authenticationManager,jwtConfig,secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernameAndPasswordAuthFilter.class);
     }
     public static JwtFilterConfigurer jwtFilterConfigurer(SecretKey secretKey,JwtConfig jwtConfig){

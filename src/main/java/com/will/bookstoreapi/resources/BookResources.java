@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/books")
 @Api(value = "Books")
+@CrossOrigin("*")
 public class BookResources {
     private final BookService bookService;
 

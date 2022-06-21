@@ -15,9 +15,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.crypto.SecretKey;
+
+import java.util.Arrays;
 
 import static com.will.bookstoreapi.auth.appUser.AppUserRole.*;
 import static com.will.bookstoreapi.auth.jwt.JwtFilterConfigurer.jwtFilterConfigurer;
@@ -37,6 +41,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
+                .cors().and()
                 .apply(jwtFilterConfigurer(secretKey,jwtConfig))
                 .and()
                 .authorizeRequests()
@@ -49,7 +54,7 @@ public class WebSecurityConfig {
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/configuration/security").permitAll()
                 .antMatchers("/v2/**").permitAll()
-                .antMatchers("/h2-console/**").hasRole(ADMIN.name())
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -70,6 +75,19 @@ public class WebSecurityConfig {
         provider.setPasswordEncoder(bCryptPasswordEncoder);
         provider.setUserDetailsService(appUserService);
         return provider;
+    }
+
+    @Bean
+    public CorsFilter corsFilter(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        //corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "x-auth-token"));
+        corsConfiguration.setExposedHeaders(Arrays.asList("x-auth-token","Authorization"));
+        source.registerCorsConfiguration("/**",corsConfiguration);
+        return new CorsFilter(source);
     }
 
 
