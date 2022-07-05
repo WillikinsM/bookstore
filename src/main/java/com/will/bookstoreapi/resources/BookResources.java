@@ -31,7 +31,7 @@ public class BookResources {
 
 
     @ApiOperation(value = "Find book by given ID")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Book> findById(@PathVariable Long id) {
         Book book = bookService.findById(id);
@@ -40,7 +40,7 @@ public class BookResources {
 
     //// books?category={id}
     @ApiOperation(value = "Find books by category ID")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<BookDTO>> findAllByCategory(
             @RequestParam(value = "category", defaultValue = "0") Long id_cat) {
@@ -52,7 +52,7 @@ public class BookResources {
     }
 
     @ApiOperation(value = "Find all Books")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping(value = "/")
     public ResponseEntity<List<BookDTO>> findAll() {
         List<Book> bookList = bookService.findAll();

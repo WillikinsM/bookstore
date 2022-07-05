@@ -47,8 +47,8 @@ public class RegistrationService {
         return token;
     }
 
-    public AppUser getById(Long id){
-        Optional<AppUser> user = appUserRepository.findById(id);
+    public AppUser getByUserName(String email){
+        Optional<AppUser> user = appUserRepository.findByEmail(email);
         return user.orElseThrow(RuntimeException::new);
     }
 

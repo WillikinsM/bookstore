@@ -5,6 +5,7 @@ import com.will.bookstoreapi.auth.appUser.AppUser;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +28,10 @@ public class RegistrationController {
 
 
 
-    @GetMapping(path = "user/{id}")
-    public ResponseEntity<Collection<? extends GrantedAuthority>> user(@PathVariable Long id) {
-        AppUser user = registrationService.getById(id);
-        System.out.println(user.getAuthorities());
+    @GetMapping(path = "user/{email}")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    public ResponseEntity<Collection<? extends GrantedAuthority>> user(@PathVariable String email) {
+        AppUser user = registrationService.getByUserName(email);
         return  ResponseEntity.ok().body(user.getAuthorities());
     }
 

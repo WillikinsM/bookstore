@@ -31,7 +31,7 @@ public class CategoryResources {
     }
 
     @ApiOperation(value = "Find Category by given ID")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Category> findById(@PathVariable Long id) {
         Category obj = categoryService.findById(id);
@@ -39,7 +39,7 @@ public class CategoryResources {
     }
 
     @ApiOperation(value = "Find all categories")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @GetMapping(value ="/")
     public ResponseEntity<List<CategoryDTO>> findAll() {
         List<Category> catList = categoryService.findAll();

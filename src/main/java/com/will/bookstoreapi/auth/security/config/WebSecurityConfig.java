@@ -5,6 +5,7 @@ import com.will.bookstoreapi.auth.jwt.JwtConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -22,6 +23,7 @@ import org.springframework.web.filter.CorsFilter;
 import javax.crypto.SecretKey;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static com.will.bookstoreapi.auth.appUser.AppUserRole.*;
 import static com.will.bookstoreapi.auth.jwt.JwtFilterConfigurer.jwtFilterConfigurer;
@@ -55,6 +57,8 @@ public class WebSecurityConfig {
                 .antMatchers("/configuration/security").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/books/**","/books","/books/").permitAll()
+                .antMatchers(HttpMethod.GET,"/category/**","/category/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -82,7 +86,7 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         //corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+        corsConfiguration.setAllowedOrigins(List.of("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "x-auth-token"));
         corsConfiguration.setExposedHeaders(Arrays.asList("x-auth-token","Authorization"));
