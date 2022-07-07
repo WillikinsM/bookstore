@@ -18,8 +18,10 @@ import javax.mail.internet.MimeMessage;
 public class EmailSenderService implements EmailSender {
 
     private final static Logger LOGGER =  LoggerFactory.getLogger((EmailSenderService.class));
-
     private final JavaMailSender mailSender;
+
+    private final EmailConfig emailConfig;
+
 
     @Override
     @Async
@@ -30,7 +32,7 @@ public class EmailSenderService implements EmailSender {
             helper.setText(email,true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
-            helper.setFrom("rebecachaves1@outlook.com");
+            helper.setFrom(emailConfig.getSecretEmail());
             mailSender.send(mimeMessage);
         }catch (MessagingException e){
             LOGGER.error("Failed to send email",e);

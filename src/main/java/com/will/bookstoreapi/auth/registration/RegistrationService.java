@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
-//import com.will.bookstoreapi.TODO: import Html to confirmar email
 import static com.will.bookstoreapi.auth.appUser.AppUserRole.*;
 
 @Service
