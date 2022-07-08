@@ -14,7 +14,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 public class JwtConfig {
 
-    private  String secretKey;
     private  String tokenPrefix;
     private  Integer tokenExpirationAfterDays;
 

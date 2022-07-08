@@ -22,10 +22,8 @@ public class RegistrationController {
 
     @PostMapping
     public String register(@RequestBody RegistrationRequest request){
-
         return registrationService.register(request);
     }
-
 
 
     @GetMapping(path = "user/{email}")
@@ -35,5 +33,12 @@ public class RegistrationController {
         return  ResponseEntity.ok().body(user.getAuthorities());
     }
 
+    @DeleteMapping("user/{email}")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    public ResponseEntity<Void> deleteUserByEmail(@PathVariable String email){
+        AppUser user = registrationService.getByUserName(email);
+        registrationService.deleteUser(user);
+        return ResponseEntity.accepted().build();
+    }
 
 }

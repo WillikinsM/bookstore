@@ -4,6 +4,7 @@ package com.will.bookstoreapi.auth.registration;
 import com.will.bookstoreapi.auth.appUser.AppUser;
 import com.will.bookstoreapi.auth.appUser.AppUserRepository;
 import com.will.bookstoreapi.auth.appUser.AppUserService;
+import com.will.bookstoreapi.auth.email.EmailConfig;
 import com.will.bookstoreapi.auth.email.EmailSender;
 import com.will.bookstoreapi.auth.registration.token.ConfirmationToken;
 import com.will.bookstoreapi.auth.registration.token.ConfirmationTokenService;
@@ -24,6 +25,7 @@ public class RegistrationService {
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
+    private final EmailConfig emailConfig;
 
     public String register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.test(request.getEmail());
@@ -41,7 +43,8 @@ public class RegistrationService {
                 )
         );
 
-        String link = "http://localhost:8080/api/v1/confirmation/?token="+ token;
+        String link =  emailConfig.getServerLink()+"/api/v1/confirmation/?token="+ token;
+
         emailSender.send(request.getEmail(),buildEmail(request.getFirstName(), link));
         return token;
     }
@@ -49,6 +52,10 @@ public class RegistrationService {
     public AppUser getByUserName(String email){
         Optional<AppUser> user = appUserRepository.findByEmail(email);
         return user.orElseThrow(RuntimeException::new);
+    }
+
+    public void deleteUser(AppUser user) {
+        appUserRepository.delete(user);
     }
 
     @Transactional
@@ -142,5 +149,6 @@ public class RegistrationService {
                 "\n" +
                 "</div></div>";
     }
+
 
 }

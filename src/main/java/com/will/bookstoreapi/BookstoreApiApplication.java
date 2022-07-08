@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
-@EnableConfigurationProperties({JwtConfig.class, EmailConfig.class})
+@EnableConfigurationProperties({JwtConfig.class,EmailConfig.class})
 public class BookstoreApiApplication {
 
 	public static void main(String[] args) {

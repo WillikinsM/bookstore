@@ -11,6 +11,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 public class EmailConfig {
+
     private String secretEmail;
+    private String serverLink;
 
 }
